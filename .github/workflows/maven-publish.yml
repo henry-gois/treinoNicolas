@@ -1,0 +1,48 @@
+name: Exemplo JAVA NAtivo
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+    
+    # Compilando com Java
+    - name: Compilar o Projeto
+      run: |
+          cd src
+          javac -cp . Main.java
+          javac -cp . MainTest.java
+      
+    # Executar o Projeto TESTE
+    - name: Executado Projeto TESTE
+      run: |
+          cd src
+          java -cp . Teste
+          
+    # Versionamento por Git Runner
+    - name: Versão do Projeto
+      run: echo ${{ github.run_number }} 
+      
+    - uses: mr-smithers-excellent/docker-build-push@v6    
+      name: Deploy no Docker 
+      with:
+        image: henrygoiss/treinonicolas
+        tags: main-${{ github.run_number }}
+        registry: docker.io
+        dockerfile: dockerfile
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+      
