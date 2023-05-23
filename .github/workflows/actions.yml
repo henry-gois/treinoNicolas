@@ -1,8 +1,11 @@
+# This workflow will build a Java project with Ant
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-ant
+
 name: Exemplo JAVA NAtivo
 
 on:
-  pull_request:
-    branches: [ "main" ]
+  push:
+    branches: [ "henry-gois-patch-1" ]
 
 jobs:
   build:
@@ -32,15 +35,6 @@ jobs:
           
     # Versionamento por Git Runner
     - name: Versão do Projeto
-      run: echo "DEV-PROJ${{ github.run_number }} "
+      run: echo ${{ github.run_number }} 
       
-    - uses: mr-smithers-excellent/docker-build-push@v6    
-      name: Deploy no Docker 
-      with:
-        image: henrygoiss/treinonicolas
-        tags: main-${{ github.run_number }}
-        registry: docker.io
-        dockerfile: dockerfile
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
       
