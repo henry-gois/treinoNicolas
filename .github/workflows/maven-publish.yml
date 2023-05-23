@@ -30,7 +30,7 @@ jobs:
     - name: Executado Projeto TESTE
       run: |
           cd src
-          java -cp . Teste
+          java -cp . MainTest
           
     # Versionamento por Git Runner
     - name: Versão do Projeto
