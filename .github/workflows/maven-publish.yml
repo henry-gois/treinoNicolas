@@ -1,8 +1,6 @@
 name: Exemplo JAVA NAtivo
 
 on:
-  push: 
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -34,7 +32,7 @@ jobs:
           
     # Versionamento por Git Runner
     - name: Versão do Projeto
-      run: echo ${{ github.run_number }} 
+      run: echo "DEV-PROJ${{ github.run_number }} "
       
     - uses: mr-smithers-excellent/docker-build-push@v6    
       name: Deploy no Docker 
